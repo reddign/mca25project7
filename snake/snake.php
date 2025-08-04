@@ -1,0 +1,13 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+</head>
+<body>
+    <H1>Snake</H1>
+    <canvas style width='500'; height='500'></canvas>
+    <link href='snake.css' rel='stylesheet'>
+    <script src='snake.js'></script>
+</body>
+</html>
