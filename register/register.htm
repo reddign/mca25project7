@@ -4,8 +4,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link rel="stylesheet" href="login.css">
-        <script src="login.js"></script>
     </head>
+    <script src="register.js"></script>
 <body>
     <div class="container">
 
@@ -13,22 +13,22 @@
 <!-- Hello World
 <BR>
 <a href="projects.htm">My Projects</a> -->
-<!-- ACTION NEEDS TO BE LINKED TO A CURRENT PHP; FOR OLIVER -->
-    <form id="login" method="post" action="processing/facilitatelogin.php"> 
+<!-- Same thing as before, registry process needs to lead somewhere. For Oliver -->
+    <form id="register" method="post" action="processing/facilitateregistry.php">
         <label for="user">Username</label>
         <input type = "text" id = "user" name = "user">
-         <br> 
+         <br>
         <label for="password">Password</label>
         <input type = "password" id = "password" name = "password">
         <br>
-        <!-- <input type="submit" value="login">
-    </form> -->
-    <!--  -->
-    <button onclick="login(event)">Login</button>
-    <p><a href="../register/register.htm">Not a member? Register here!</a></p>
-    <!-- Not sure the ../ href is going to work if/when we upload this.
-     I can't figure it out though. If you know how, please fix. -->
+        <label for="email">Email</label>
+        <input type = "text" id = "email" name = "email">
+        <br>
+        <input type="submit" value="Register" onclick="register(event)">
     </form>
+    <!--  -->
+    <!-- <button onclick="register(event)">Register</button> -->
+
     </div>
 </body>
 
