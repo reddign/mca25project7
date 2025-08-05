@@ -35,9 +35,25 @@ function move(event){
     x = event.clientX - canvasrect.x
     y = event.clientY - canvasrect.y
 }
-function addpoints(event){
+function mousedown(event){
     if(Math.sqrt(Math.pow(objX-x,2)+Math.pow(objY-y,2))<=radius){
         points+=clickpwr
+    }if (x>=15 && x<=280 && y>=45 && y<=68 && points>=cost1){
+        points-=cost1
+        clickpwr++
+        cost1+=Math.floor(cost1/2)
+    }if (x>=15 && x<=280 && y>=80 && y<=105 && points>=cost2){
+        points-=cost2
+        clickpwr+=5
+        cost2+=Math.floor(cost2/2)
+    }if (x>=15 && x<=280 && y>=115 && y<=140 && points>=cost3){
+        points-=cost3
+        clickpwr+=10
+        cost3+=Math.floor(cost3/2)
+    }if (x>=15 && x<=280 && y>=150 && y<=175 && points>=cost4){
+        points-=cost4
+        clickpwr+=20
+        cost4+=Math.floor(cost4/2)
     }
 }
 function clear(){
@@ -56,20 +72,22 @@ function drawScore(points){
     graphics.font = "bold 24px 'Arial', serif"
     graphics.fillText("Points: ",10, 30,100)
     graphics.fillText(points,95,31,100)
+    graphics.fillText("Click Power: ",1000, 30,100)
+    graphics.fillText(clickpwr,1100,31,100)
 }
 
 function drawUpgrades(){
     graphics.fillStyle='black'
-    if (points>=10){
+    if (points>=cost1){
     graphics.fillText('+1 Click Power: '+ cost1, 50, 70)
     graphics.drawImage(bronze, 20, 45, 25, 25)
-    }if (points>=25){
+    }if (points>=cost2){
     graphics.fillText('+5 Click Power: '+ cost2, 50, 105)
     graphics.drawImage(silver, 20, 80, 25, 25)
-    }if (points>=50){
+    }if (points>=cost3){
     graphics.fillText('+10 Click Power: '+ cost3, 50, 140)
     graphics.drawImage(gold, 20, 115, 25, 25)
-    }if (points>=100){
+    }if (points>=cost4){
     graphics.fillText('+20 Click Power: '+ cost4, 50, 175)
     graphics.drawImage(diamond, 20, 150, 25, 25)
     }
