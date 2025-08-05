@@ -11,13 +11,13 @@ let pieceCurrent=""
 let queueInd=0
 let process=window.setInterval(tick,1/60)
 let pieceShapeArray=[
-    [[0,0],[-1,-1],[0,-1],[1,0]],
-    [[-1,0],[0,0],[1,0],[1,-1]],
-    [[.5,.5],[-.5,.5],[.5,-.5],[-.5,-.5]],
-    [[0,0],[0,-1],[1,-1],[-1,0]],
+    [[0,-1],[-1,-1],[0,0],[1,0]],
+    [[1,-1],[0,0],[1,0],[-1,0]],
+    [[.5,-.5],[-.5,.5],[.5,.5],[-.5,-.5]],
+    [[0,-1],[0,0],[1,-1],[-1,0]],
     [[-1.5,-.5],[-.5,-.5],[.5,-.5],[1.5,-.5]],
     [[-1,-1],[-1,0],[0,0],[1,0]],
-    [[-1,0],[0,0],[0,-1],[1,0]]]
+    [[0,-1],[0,0],[-1,0],[1,0]]]
 let colorArray=["red","orange","yellow","green","cyan","blue","purple"]
 let placeTimer=0
 let placeTimerReset=120
@@ -126,5 +126,11 @@ function onGround(){
     return false
 }
 function placePiece(){
+    for(let i=board.length;i<=19-(pieceY+pieceShape[0][1]);i++){
+        board.push([7,7,7,7,7,7,7,7,7,7])
+    }
+    for(let i=0;i<4;i++){
+        board[pieceShape[i][0]+pieceX][19-(pieceY+pieceShape[i][1])]=pieceCurrent
+    }
     newPiece() // finish this fr
 }
