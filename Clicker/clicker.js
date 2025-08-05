@@ -75,6 +75,22 @@ function mousedown(event){
         points-=cost4
         clickpwr+=20
         cost4+=Math.floor(cost4/2)
+    }if (x>=15 && x<=280 && y>=245 && y<=275 && points>=aCost1){
+        points-=aCost1
+        autoclick+=0.25
+        aCost1+=Math.floor(aCost1/2)
+    }if (x>=15 && x<=280 && y>=280 && y<=310 && points>=aCost2){
+        points-=aCost2
+        autoclick+=0.5
+        aCost2+=Math.floor(aCost2/2)
+    }if (x>=15 && x<=280 && y>=320 && y<=345 && points>=aCost3){
+        points-=aCost3
+        autoclick+=0.75
+        aCost3+=Math.floor(aCost3/2)
+    }if (x>=15 && x<=280 && y>=355 && y<=375 && points>=aCost4){
+        points-=aCost4
+        autoclick+=1
+        aCost4+=Math.floor(aCost4/2)
     }
 }
 function clear(){
@@ -95,6 +111,8 @@ function drawScore(points){
     graphics.fillText(points,95,31,100)
     graphics.fillText("Click Power: ",1000, 30,100)
     graphics.fillText(clickpwr,1100,31,100)
+    graphics.fillText("Auto Click: ",1000, 60,100)
+    graphics.fillText(autoclick,1100,61,100)
 }
 
 function drawUpgrades(){
