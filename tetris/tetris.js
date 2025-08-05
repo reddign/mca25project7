@@ -19,6 +19,8 @@ let pieceShapeArray=[
     [[-1,-1],[-1,0],[0,0],[1,0]],
     [[-1,0],[0,0],[0,-1],[1,0]]]
 let colorArray=["red","orange","yellow","green","cyan","blue","purple"]
+let placeTimer=0
+let placeTimerReset=120
 setup()
 
 function tick(){
@@ -27,10 +29,18 @@ function tick(){
 }
 function update(){
     timer++
-    if(timer%grav==0){
-        pieceY+=1
+    if(onGround()){
+        placeTimer--
+        if(placeTimer<0){
+            placePiece()
+        }
+    }else{
+        if(timer%grav==0){
+            pieceY+=1
+        }
     }
     pieceX+=movePiece()
+    console.log(pieceY)
 }
 function draw(){
     graphics.fillStyle="black"
@@ -56,10 +66,9 @@ function draw(){
         graphics.fillRect(490+30*(pieceX+pieceShape[i][0]),60+30*(pieceY+pieceShape[i][1]),30,30)
     }
     for(let i=0;i<5;i++){
-        graphics.fillStyle=colorArray[pieceQueue[queueInd+i]]
+        graphics.fillStyle=colorArray[pieceQueue[queueInd+i+1]]
         for(let j=0;j<4;j++){
-            console.log(pieceQueue[queueInd+j])
-            graphics.fillRect(810+10*(pieceShapeArray[pieceQueue[queueInd+i]][j][0]),80+10*(i*5+pieceShapeArray[pieceQueue[queueInd+i]][j][1]),10,10)
+            graphics.fillRect(810+10*(pieceShapeArray[pieceQueue[queueInd+i+1]][j][0]),80+10*(i*5+pieceShapeArray[pieceQueue[queueInd+i+1]][j][1]),10,10)
         }
     }
 }
@@ -85,6 +94,7 @@ function movePiece(){ // TODO: add keyboard input + movement logic
 }
 function newPiece(){ // should work
     queueInd++
+    placeTimer=placeTimerReset
     pieceCurrent=pieceQueue[queueInd]
     pieceShape=pieceShapeArray[pieceCurrent]
     if(pieceCurrent==2||pieceCurrent==4){
@@ -101,4 +111,20 @@ function newPiece(){ // should work
     if(queueInd+6>pieceQueue.length){
         fillQueue()
     }
+}
+function onGround(){
+    if(pieceY>=19){
+        return true
+    }
+    if(19-board.length<=pieceY){
+        for(let i=0;i<4;i++){
+            if(board[pieceX+pieceShape[i][0]][19-(pieceY+pieceShape[i][1]+1)]!=7){
+                return true
+            }
+        }
+    }
+    return false
+}
+function placePiece(){
+    newPiece() // finish this fr
 }
