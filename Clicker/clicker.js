@@ -2,17 +2,22 @@ let canvas = document.querySelector('canvas');
 const graphics = canvas.getContext('2d');
 let clickpwr = 1
 let points = 0
-let x = 650
-let y = 275
-let radius = 30
-
+let x=0
+let y=0
 function animate(){
     clear()
     drawScore(points)
     button()
 }
+function move(event){
+    let canvasrect = canvas.getBoundingClientRect()
+    x = event.clientX - canvasrect.x
+    y = event.clientY - canvasrect.y
+}
 function one(event){
-    points+=1
+    if(x>=590 && x<=710 && y>=210 && y<=335){
+        points+=clickpwr
+    }
 }
 function clear(){
     graphics.fillStyle='lightBlue'
@@ -21,7 +26,7 @@ function clear(){
 function button(){
     graphics.fillStyle ="black"
     graphics.beginPath()
-    graphics.arc(x, y, radius,0, Math.PI*2)
+    graphics.arc(650, 275, 60,0, Math.PI*2)
     graphics.fill()
     graphics.closePath()
 }
