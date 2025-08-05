@@ -5,6 +5,7 @@ background-color: #2be566;
 form {
 border: 3px solid #f1f1f1;
 padding: 12px;
+border-radius: 5px;
 }
 /* Full-width inputs */
 input[type=text], input[type=password] {
@@ -14,6 +15,10 @@ margin: 8px 0;
 display: inline-block;
 border: 1px solid #ccc;
 box-sizing: border-box;
+border-radius: 15px;
+}
+input[type=text]:hover, input[type=password]:hover {
+    background-color: rgb(244, 226, 226);
 }
 /* Set a style for all buttons */
 button {
@@ -24,6 +29,7 @@ margin: 8px 0;
 border: none;
 cursor: pointer;
 width: 100%;
+border-radius: 5px;
 }
 /* Add a hover effect for buttons */
 button:hover {
