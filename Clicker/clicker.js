@@ -1,7 +1,7 @@
 let canvas = document.querySelector('canvas');
 const graphics = canvas.getContext('2d');
 let clickpwr = 1
-let autoclick = 0.25
+let autoclick = 0
 let points = 0
 let x=0
 let y=0
@@ -9,12 +9,14 @@ let objX = 650
 let objY = 275
 let radius = 60
 let cost1 = 10
+let cost2 = 25
 let speed = 1000
 const bronze = new Image()
 bronze.src = 'BronzeFin.png'
 const diamond = new Image()
 diamond.src = 'DiamondFin.png'
-
+// const silver = new Image()
+// silver.src = ''
 function animate(){
     clear()
     drawScore(points)
@@ -54,10 +56,13 @@ function drawScore(points){
 
 function drawUpgrades(){
     graphics.fillStyle='black'
+    if (points>=10){
     graphics.fillText('+1 Click Power: '+ cost1, 50, 70)
-    graphics.drawImage(bronze, 20, 50, 25, 25)
-    // graphics.fillText('+1 Click Power: '+ cost1, 50, 70)
-    // graphics.drawImage(bronze, 20, 50, 25, 25)
+    graphics.drawImage(bronze, 20, 45, 25, 25)
+    }if (points>=25){
+    graphics.fillText('+0.25 Auto Click: '+ cost2, 50, 105)
+    graphics.drawImage(diamond, 20, 80, 25, 25)
+    }
 }
 
 let loop = window.setInterval(animate, 16)
