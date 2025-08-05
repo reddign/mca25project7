@@ -126,11 +126,11 @@ function onGround(){
     return false
 }
 function placePiece(){
-    for(let i=board.length;i<=19-(pieceY+pieceShape[0][1]);i++){
+    /*for(let i=board.length;i<=19-(pieceY+pieceShape[0][1]);i++){
         board.push([7,7,7,7,7,7,7,7,7,7])
     }
     for(let i=0;i<4;i++){
         board[pieceShape[i][0]+pieceX][19-(pieceY+pieceShape[i][1])]=pieceCurrent
-    }
+    }*/
     newPiece() // finish this fr
 }
