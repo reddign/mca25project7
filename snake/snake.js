@@ -1,13 +1,10 @@
 let canvas = document.querySelector("canvas");
 const graphics = canvas.getContext("2d");
-let sX = 0
-let sY = 0
-let snake = []
-let snakeSpeedY = 0
-let round = 3
-let foodX = 0
-let foodY = 0
 
+/*  VARIABLES    */
+let round = 1
+
+/*  FUNCTIONS   */
 function drawblocks(){
     for(i=0;i<round+2;i++){
         for(a=0;a<round+2;a++){
@@ -22,12 +19,9 @@ function drawblocks(){
         }
     }
 }
-function drawfood(){
-
-}
 function animate(){
     drawblocks();
 }
 
-
+//used to animate, continually draws whats in animate
 let loop = window.setInterval(animate, 200)
