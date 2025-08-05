@@ -4,6 +4,9 @@ let clickpwr = 1
 let points = 0
 let x=0
 let y=0
+let objX = 650
+let objY = 275
+let radius = 60
 function animate(){
     clear()
     drawScore(points)
@@ -14,8 +17,8 @@ function move(event){
     x = event.clientX - canvasrect.x
     y = event.clientY - canvasrect.y
 }
-function one(event){
-    if(x>=590 && x<=710 && y>=210 && y<=335){
+function addpoints(event){
+    if(Math.sqrt(Math.pow(objX-x,2)+Math.pow(objY-y,2))<=radius){
         points+=clickpwr
     }
 }
@@ -26,7 +29,7 @@ function clear(){
 function button(){
     graphics.fillStyle ="black"
     graphics.beginPath()
-    graphics.arc(650, 275, 60,0, Math.PI*2)
+    graphics.arc(objX, objY, radius,0, Math.PI*2)
     graphics.fill()
     graphics.closePath()
 }
