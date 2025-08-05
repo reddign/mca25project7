@@ -14,13 +14,13 @@ let cost3 = 50
 let cost4 = 100
 let speed = 1000
 const bronze = new Image()
-bronze.src = 'BronzeFin.png'
+bronze.src = 'images/BronzeFin.png'
 const diamond = new Image()
-diamond.src = 'DiamondFin.png'
+diamond.src = 'images/DiamondFin.png'
 const silver = new Image()
-silver.src = 'SilverFin.png'
+silver.src = 'images/SilverFin.png'
 const gold = new Image()
-gold.src = 'GoldFin.png'
+gold.src = 'images/GoldFin.png'
 function animate(){
     clear()
     drawScore(points)
