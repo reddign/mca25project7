@@ -1,7 +1,7 @@
 let canvas = document.querySelector("canvas");
 const graphics = canvas.getContext("2d");
-const img = new Image()
-img.src = 'apple.png'
+const apple = new Image()
+apple.src = 'apple.png'
 /*  VARIABLES    */
 let round = 3;
 let blocksdrawn = 0;
@@ -24,7 +24,7 @@ function drawblocks(){
     }
 }
 function drawFood(){
-    graphics.drawImage(img,100,100,1250/blocksdrawn,1250/blocksdrawn)
+    graphics.drawImage(apple,100,100,1250/blocksdrawn,1250/blocksdrawn)
     
 }
 function animate(){
