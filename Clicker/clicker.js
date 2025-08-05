@@ -1,6 +1,6 @@
 let canvas = document.querySelector('canvas');
 const graphics = canvas.getContext('2d');
-let clickpwr = 1
+let clickpwr = 100000
 let autoclick = 0
 let points = 0
 let x=0
@@ -12,6 +12,10 @@ let cost1 = 10
 let cost2 = 25
 let cost3 = 50
 let cost4 = 100
+let aCost1 = 25
+let aCost2 = 50
+let aCost3 = 100
+let aCost4 = 200
 let speed = 1000
 const bronze = new Image()
 bronze.src = 'images/BronzeFin.png'
@@ -21,6 +25,23 @@ const silver = new Image()
 silver.src = 'images/SilverFin.png'
 const gold = new Image()
 gold.src = 'images/GoldFin.png'
+const auto1 = new Image()
+auto1.src = 'images/BronzeGuy.png'
+const auto2 = new Image()
+auto2.src = 'images/SilverGuy.png'
+const auto3 = new Image()
+auto3.src = 'images/GoldGuy.png'
+const auto4 = new Image()
+auto4.src = 'images/DiamondGuy.png'
+const gif1 = new Image()
+gif1.src = 'gifs/BronzeGuyGIF.gif'
+const gif2 = new Image()
+gif2.src = 'gifs/SilverGuyGIF.gif'
+const gif3 = new Image()
+gif3.src = 'gifs/GoldGuyGIF.gif'
+const gif4 = new Image()
+gif4.src = 'gifs/DiamondGuyGIF.gif'
+
 function animate(){
     clear()
     drawScore(points)
@@ -90,6 +111,18 @@ function drawUpgrades(){
     }if (points>=cost4){
     graphics.fillText('+20 Click Power: '+ cost4, 50, 175)
     graphics.drawImage(diamond, 20, 150, 25, 25)
+    }if (points>=aCost1){
+    graphics.fillText('+0.25 Auto Click: '+aCost1,50, 275)
+    graphics.drawImage(auto1, 18, 250, 25, 25)
+    }if (points>=aCost2){
+    graphics.fillText('+0.5 Auto Click: '+aCost2,50, 310)
+    graphics.drawImage(auto2, 20, 285, 25, 25)
+    }if (points>=aCost3){
+    graphics.fillText('+0.75 Auto Click: '+aCost3,50, 345)
+    graphics.drawImage(auto3, 20, 320, 25, 25)
+    }if (points>=aCost4){
+    graphics.fillText('+1 Auto Click: '+aCost4,50, 380)
+    graphics.drawImage(auto4, 20, 355, 25, 25)
     }
 }
 
