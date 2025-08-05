@@ -10,13 +10,17 @@ let objY = 275
 let radius = 60
 let cost1 = 10
 let cost2 = 25
+let cost3 = 50
+let cost4 = 100
 let speed = 1000
 const bronze = new Image()
 bronze.src = 'BronzeFin.png'
 const diamond = new Image()
 diamond.src = 'DiamondFin.png'
-// const silver = new Image()
-// silver.src = ''
+const silver = new Image()
+silver.src = 'SilverFin.png'
+const gold = new Image()
+gold.src = 'GoldFin.png'
 function animate(){
     clear()
     drawScore(points)
@@ -60,8 +64,14 @@ function drawUpgrades(){
     graphics.fillText('+1 Click Power: '+ cost1, 50, 70)
     graphics.drawImage(bronze, 20, 45, 25, 25)
     }if (points>=25){
-    graphics.fillText('+0.25 Auto Click: '+ cost2, 50, 105)
-    graphics.drawImage(diamond, 20, 80, 25, 25)
+    graphics.fillText('+5 Click Power: '+ cost2, 50, 105)
+    graphics.drawImage(silver, 20, 80, 25, 25)
+    }if (points>=50){
+    graphics.fillText('+10 Click Power: '+ cost3, 50, 140)
+    graphics.drawImage(gold, 20, 115, 25, 25)
+    }if (points>=100){
+    graphics.fillText('+20 Click Power: '+ cost4, 50, 175)
+    graphics.drawImage(diamond, 20, 150, 25, 25)
     }
 }
 
