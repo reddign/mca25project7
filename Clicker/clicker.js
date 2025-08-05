@@ -7,10 +7,12 @@ let y=0
 let objX = 650
 let objY = 275
 let radius = 60
+let cost1 = 10
 function animate(){
     clear()
     drawScore(points)
     button()
+    drawUpgrades()
 }
 function move(event){
     let canvasrect = canvas.getBoundingClientRect()
@@ -37,6 +39,12 @@ function drawScore(points){
     graphics.fillStyle ='black'
     graphics.font = "bold 24px 'Arial', serif"
     graphics.fillText("Points: "+ points, 10, 30,100)
+}
+
+function drawUpgrades(){
+    graphics.font('15px')
+    graphics.fillStyle='black'
+    graphics.fillText('+1 Click Power: '+ cost1, 20, 70)
 }
 
 let loop = window.setInterval(animate, 16)
