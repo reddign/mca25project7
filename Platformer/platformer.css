@@ -9,3 +9,11 @@ canvas {
     display: block;
     width: 800px;
 }
+
+    #sprite {
+        width: 25px;
+        height: 25px;
+        background: red;
+        position: relative;
+        transition: 0.1s linear;
+    }

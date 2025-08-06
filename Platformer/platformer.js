@@ -4,6 +4,8 @@ console.log("Let's make a game.");
 
 let canvas = document.querySelector("canvas");
 let graphics = canvas.getContext("2d");
+let faceimg = document.getElementById("face");
+// canvas.focus();
 let x = 20;
 let y = 100;
 let paddlex1 = 250
@@ -29,10 +31,13 @@ function animate(){
         clear();
         scoreboard()
         endscreen()
+        // drawperson(40,40)
         paddle1()
         paddle2()
         paddle3()
         paddle4()
+        paddle5()
+        // paddle6()
         console.log("lives", lives, "score", score)
     }else if(!gameOver){
         endscreen();
@@ -46,7 +51,11 @@ function scoreboard(){
     graphics.fillText(scoreStr, 10,10)
 }
 
-    
+
+function drawperson(x,y){
+    graphics.drawImage(faceimg,x,y)
+}
+
 
 function clear(){
     graphics.fillStyle = "rgb(0,0,0, 0.4)";
@@ -70,7 +79,12 @@ function paddle3(){
 
 function paddle4(){
     graphics.fillStyle = "white"
-    graphics.fillRect(170,130,70,5)
+    graphics.fillRect(170,130,100,5)
+}
+
+function paddle5(){
+    graphics.fillStyle = "white"
+    graphics.fillRect(250,85,25,5)
 }
 
 // function bounceball(){
