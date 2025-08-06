@@ -5,7 +5,7 @@ let board=[]
 let timer=0
 let pieceX=0
 let pieceY=0
-let grav=120
+let grav=60
 let pieceShape=[[],[],[],[]]
 let pieceCurrent=""
 let queueInd=-1
@@ -52,14 +52,14 @@ function draw(){
     }
     graphics.strokeStyle="gainsboro"
     graphics.strokeRect(490,60,300,600)
-    /*for(let r=0;r<board.length;r++){
+    for(let r=0;r<board.length;r++){
         for(let c=0;c<10;c++){
-            if(board[c][r]!=7){ // color handling works hopefully but untested
-                graphics.fillStyle=colorArray[board[c][r]]
-                graphics.fillRect() // TODO: draw rectangles (o yeah y axis is inverted in the table btw so thats fun (its like this intentionally dont worry about it))
+            if(board[r][c]!=7){ // color handling works hopefully but untested
+                graphics.fillStyle=colorArray[board[r][c]]
+                graphics.fillRect(490+30*c,60+30*(19-r),30,30) // it works yippee (o yeah y axis is inverted in the table btw so thats fun (its like this intentionally dont worry about it))
             }
         }
-    }*/
+    }
     for(let i=0;i<4;i++){
         graphics.fillStyle=colorArray[pieceCurrent]
         graphics.fillRect(490+30*(pieceX+pieceShape[i][0]),60+30*(pieceY+pieceShape[i][1]),30,30)
@@ -118,7 +118,7 @@ function onGround(){
     console.log(board.length,pieceY,getLowest())
     if(19-board.length<=pieceY+getLowest()){
         for(let i=0;i<4;i++){
-            if(board[pieceX+pieceShape[i][0]][19-(pieceY+pieceShape[i][1]+1)]!=7){
+            if(board[19-(pieceY+pieceShape[i][1])-1][pieceX+pieceShape[i][0]]!=7){
                 return true
             }
         }
@@ -131,10 +131,9 @@ function placePiece(){
     }
     for(let i=0;i<4;i++){
         console.log(pieceShape[i][0]+pieceX,19-(pieceY+pieceShape[i][1]))
-        //board[pieceShape[i][0]+pieceX][19-(pieceY+pieceShape[i][1])]=pieceCurrent
         board[19-(pieceY+pieceShape[i][1])][pieceShape[i][0]+pieceX]=pieceCurrent
     }
-    newPiece() // finish this fr
+    newPiece() // finish this fr (maybe finished? idk n idrc rn)
 }
 function getLowest(){
     let temp=-1
