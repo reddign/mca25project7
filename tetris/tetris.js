@@ -5,7 +5,7 @@ let board=[]
 let timer=0
 let pieceX=0
 let pieceY=0
-let grav=60
+let grav=30
 let pieceShape=[[],[],[],[]]
 let pieceCurrent=""
 let queueInd=-1
@@ -20,7 +20,7 @@ let pieceShapeArray=[
     [[0,-1],[0,0],[-1,0],[1,0]]]
 let colorArray=["red","orange","yellow","green","cyan","blue","purple"]
 let placeTimer=0
-let placeTimerReset=120
+let placeTimerReset=30
 setup()
 
 function tick(){
@@ -115,12 +115,10 @@ function onGround(){
     if(pieceY+getLowest()>=19){
         return true
     }
-    console.log(board.length,pieceY,getLowest())
-    if(19-board.length<=pieceY+getLowest()){
-        for(let i=0;i<4;i++){
-            if(board[19-(pieceY+pieceShape[i][1])-1][pieceX+pieceShape[i][0]]!=7){
-                return true
-            }
+    for(let i=0;i<4;i++){
+        if((19-board.length<=pieceY+pieceShape[i][1])&&
+            (board[19-(pieceY+pieceShape[i][1])-1][pieceX+pieceShape[i][0]]!=7)){
+            return true
         }
     }
     return false
