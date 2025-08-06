@@ -8,58 +8,14 @@
 </head>
 <body>
     <h1>Platformer</h1>
-    <canvas style = "background-color:black; width: 1000px; height: 450px;"></canvas>
+    <canvas style = "background-color:rgb(98, 255, 0);"  width="1000" height="450"></canvas>
+
+
+    <BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/>
+    <BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/>
+    <BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/>
+    <BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/>
+    <img src="image/ship.jpg" id="face">
     <script src = "platformer.js"></script><br>
 </body>
 </html>
-<!-- I'd be willing to help out with the platformer if whoever is doing it wants. Ask Abdullah. -->
-
-
-<!-- This is apparently WASD movement code. Thank you stack overflow -->
-
-
-
-<!-- <script>
-    const box = document.querySelector('#box');
-    const sprite = document.querySelector('#sprite');
-    const button = document.querySelector('button');
-    let speed = 5;
-
-    const toNum = (pxVal) => {
-        return parseInt(pxVal, 10);
-    };
-
-    const handleMovement = (e) => {
-        let left = toNum(sprite.style.left);
-        const bottom = toNum(sprite.style.bottom);
-
-        switch (e.key) {
-            case 'a':
-                if (left <= 0) return (sprite.style.left = 0);
-                sprite.style.left = left - speed + 'px';
-                break;
-            case 'd':
-                if (left >= 175) return (sprite.style.left = 175);
-                sprite.style.left = left + speed + 'px';
-                break;
-            case 'w':
-                if (bottom >= 0) return (sprite.style.bottom = 0);
-                sprite.style.bottom = bottom + speed + 'px';
-                break;
-            case 's':
-                if (bottom <= -175) return (sprite.style.bottom = -175);
-                sprite.style.bottom = bottom - speed + 'px';
-                break;
-        }
-    };
-
-    window.addEventListener('keydown', handleMovement);
-
-    button.addEventListener('click', () => (speed += 5));
-</script> -->
-
-<BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/>
-    <BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/>
-    <BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/>
-    <BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/>
-    <img src="image/tface.png" id="face">

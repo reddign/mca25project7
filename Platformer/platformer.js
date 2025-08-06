@@ -8,14 +8,14 @@ let faceimg = document.getElementById("face");
 // canvas.focus();
 let x = 20;
 let y = 100;
-let paddlex1 = 250
-let paddley1 = 10
-let paddlex2 = 150
-let paddley2 = 70
-let paddlex3 = 60
-let paddley3 = 120
-let paddlewidth = 5
-let paddleheight = 80
+let paddlex1 = 250*3
+let paddley1 = 10*3
+let paddlex2 = 150*3
+let paddley2 = 70*3
+let paddlex3 = 60*3
+let paddley3 = 120*3
+let paddlewidth = 5*3
+let paddleheight = 80*3
 let FPS = 5;
 let speed = 2;
 let directionx = 1;
@@ -26,18 +26,22 @@ let score = 0
 let again = "whatever";
 let gameOver = false;
 
+
+
 function animate(){
+    drawperson(40,40);
     if (lives>0){
         clear();
         scoreboard()
         endscreen()
-        // drawperson(40,40)
+        
         paddle1()
         paddle2()
         paddle3()
         paddle4()
         paddle5()
         // paddle6()
+        
         console.log("lives", lives, "score", score)
     }else if(!gameOver){
         endscreen();
@@ -47,13 +51,14 @@ function animate(){
 
 function scoreboard(){
     graphics.fillStyle = "yellow"
+    graphics.font = "bold 28px serif";
     let scoreStr = "Lives: " + lives + " Scores: " + score;
-    graphics.fillText(scoreStr, 10,10)
+    graphics.fillText(scoreStr, 10,30)
 }
 
 
 function drawperson(x,y){
-    graphics.drawImage(faceimg,x,y)
+    graphics.drawImage(faceimg,x,y,50,50)
 }
 
 
@@ -74,17 +79,17 @@ function paddle2(){
 
 function paddle3(){
     graphics.fillStyle = "white"
-    graphics.fillRect(paddlex3,paddley3,70,5)
+    graphics.fillRect(paddlex3,paddley3,70*3,5*3)
 }
 
 function paddle4(){
     graphics.fillStyle = "white"
-    graphics.fillRect(170,130,100,5)
+    graphics.fillRect(170*3,130*3,100*3,5*3)
 }
 
 function paddle5(){
     graphics.fillStyle = "white"
-    graphics.fillRect(250,85,25,5)
+    graphics.fillRect(250*3,85*3,25*3,5*3)
 }
 
 // function bounceball(){
