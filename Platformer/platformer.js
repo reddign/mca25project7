@@ -22,7 +22,7 @@ let FPS = 5;
 let speed = 2;
 let directionx = 1;
 let directiony = 1
-let radius = 10
+let radius = 50
 let lives = 3
 let again = "whatever";
 let gameOver = false;
@@ -41,6 +41,7 @@ function animate(){
         paddle3()
         paddle4()
         paddle5()
+        checkIntersection()
         // paddle6()
         
         //console.log("lives", lives)
@@ -92,23 +93,31 @@ function paddle5(){
     graphics.fillStyle = "white"
     graphics.fillRect(250*3,85*3,25*3,5*3)
 }
+function checkIntersection(){
 
-// function bounceball(){
-//    // if(x + radius > canvas.width){
-//         // lives--
-//         // Math.random();50 + 20
-//        // directionx = directionx * -1
-    
-//     if(x + radius > canvas.width || x - radius < 0){
-//         directionx = directionx * -1;
-        
-//     }
-//    if(y + radius > canvas.height || y - radius < 0){
-//     directiony = directiony * -1
-//    }
-// }
+
+
+//intersect paddle
+    if(x+radius > paddlex1 && x+radius < paddlex1 +paddlewidth
+        && y +radius > paddley1 && y+radius < paddley1 + paddleheight
+        ||
+        x+radius > paddlex1 && x+radius < paddlex1 +paddlewidth
+        && y -radius > paddley1 && y-radius < paddley1 + paddleheight
+    ){
+        directionx = -1;
+        directiony = -1;
+        console.log("We intersected");       
+    }else{
+        directionx = 1;
+        directiony = 1;
+    }
+
+   // console.log(x,y,paddlex1,paddley1)
+}
 
 window.setInterval(animate,FPS/1000);
+
+
 
 function endscreen(){
     if(lives<=0){
@@ -125,20 +134,20 @@ function endscreen(){
 }
 
 document.addEventListener('keydown',(event)=>{
-    console.log(`Key pressed: ${event.key}`);
-    console.log(`Key code: ${event.code}`);
+    // console.log(`Key pressed: ${event.key}`);
+    // console.log(`Key code: ${event.code}`);
 
     if(event.key === 'ArrowUp'){
-        y -= 2;
+        y -= 2*directiony;
         
     }else if(event.key === 'ArrowDown'){
-        y += 2;
+        y += 2*directiony;
         
     }else if(event.key === 'ArrowLeft'){
-        x -= 2;
+        x -= 2*directionx;
         
     }else if(event.key === 'ArrowRight'){
-        x += 2;
+        x += 2*directionx;
         
     }
 
