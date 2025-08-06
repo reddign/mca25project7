@@ -11,13 +11,22 @@ const snakeHeadU = new Image()
 snakeHeadU.src = 'snake/SnakeHeadU.png'
 const snakeHeadD = new Image()
 snakeHeadD.src = 'snake/SnakeHeadD.png'
-const snakeHeadD = new Image()
-snakeHeadD.src = 'snake/SnakeHeadD.png'
-const tail = new Image()
-tail.src = 'snake/SnakeTail.png'
+const tailu = new Image()
+tailu.src = 'snake/SnakeTailU.png'
+const taild = new Image()
+taild.src = 'snake/SnakeTailD.png'
+const tailL = new Image()
+tailL.src = 'snake/SnakeTailL.png'
+const tailr = new Image()
+tailr.src = 'snake/SnakeTailR.png'
+const body = new Image()
+body.src = 'snake/Snakebody.png'
+const turn = new Image()
+turn.src = 'snake/SnakeTurn.png'
 document.addEventListener('keydown', getKeyInput);
 /*  VARIABLES    */
 let blocks = []
+let snake = []
 let round = 3;
 let blocksdrawn = 0;
 let blockheight = 0
@@ -35,7 +44,7 @@ let moveDown = false
 let moveRight = false
 let snakedir = 'left'
 let levelStart = false
-let snakebody = 0
+let snakebody = 1
 let turning = false
 
 
@@ -85,17 +94,52 @@ function animate(){
     drawblocks();
     if(!levelStart){
         reset();
+        snake = [
+            {x: snakex, y: snakey, direction: 'left'},//head
+            {x: snakex + blockwidth*2, y: snakey, direction: 'left'}//tail
+        ]
         eat(true);
         levelStart=true
     }
     drawFood(foodx,foody);
+    updateSnakePosition();
     move();
     drawSnake(snakex,snakey,snakedir);
     if(snakex == foodx && snakey == foody){
-        eat(true)
-        console.log(foodx,foody)
+        // Add new segment to snake when food is eaten
+        const last = snake[snake.length - 1];
+        snake.push({ x: last.x, y: last.y, direction: last.direction });
+        eat(true);
+        console.log("Food eaten! Snake length:", snake.length);
+    }
+}function updateSnakePosition() {
+    // Move body from tail to head (backwards)
+    for (let i = snake.length - 1; i > 0; i--) {
+        snake[i].x = snake[i - 1].x;
+        snake[i].y = snake[i - 1].y;
+        snake[i].direction = snake[i - 1].direction;
+    }
+
+    // Update head position
+    let head = snake[0];
+    if (moveUp) {
+        head.y -= blockheight;
+        head.direction = 'up';
+    }
+    if (moveDown) {
+        head.y += blockheight;
+        head.direction = 'down';
+    }
+    if (moveLeft) {
+        head.x -= blockwidth;
+        head.direction = 'left';
+    }
+    if (moveRight) {
+        head.x += blockwidth;
+        head.direction = 'right';
     }
 }
+
 function move(event){
     if(moveUp==true){
         if(snakey>0){
@@ -115,7 +159,7 @@ function move(event){
             snakedir='down'
         }
     }
-    if(moveRight==true){
+    if(moveRight==true && moveLeft!=true){
         if(snakex<500-blockwidth){
             snakex+=blockwidth
             snakedir='right'
@@ -123,39 +167,42 @@ function move(event){
     }
 }
 function getKeyInput(event){
-    if(event.key == 'w' || event.key == 'ArrowUp'){
+    if((event.key == 'w' || event.key == 'ArrowUp') && (moveDown!=true)){
         moveUp = true;
         moveDown = moveRight = moveLeft = false;
     } 
-    if(event.key == 'a' || event.key == 'ArrowLeft'){
+    if((event.key == 'a' || event.key == 'ArrowLeft') && (moveRight!=true)){
         moveLeft = true;
         moveDown = moveRight = moveUp = false;
     }
-    if(event.key == 's' || event.key == 'ArrowDown'){
+    if((event.key == 's' || event.key == 'ArrowDown') && (moveUp!=true)){
         moveDown = true;
         moveUp = moveRight = moveLeft = false;
     }
-    if(event.key == 'd' || event.key == 'ArrowRight'){
+    if((event.key == 'd' || event.key == 'ArrowRight') && (moveLeft!=true)){
         moveRight = true;
         moveDown = moveUp = moveLeft = false;
     }
 }
-function drawSnake(x,y,facing){
-    if(facing == 'left'){
-        console.log('left');
-        graphics.drawImage(snakeHeadL,x,y,blockwidth,blockheight)
-    }
-    if(facing == 'right'){
-        console.log('right');
-        graphics.drawImage(snakeHeadR,x,y,blockwidth,blockheight)
-    }
-    if(facing == 'up'){
-        console.log('up');
-        graphics.drawImage(snakeHeadU,x,y,blockwidth,blockheight)
-    }
-    if(facing == 'down'){
-        console.log('down');
-        graphics.drawImage(snakeHeadD,x,y,blockwidth,blockheight)
+function drawSnake() {
+    for (let i = 0; i < snake.length; i++) {
+        let part = snake[i];
+        if (i == 0) {
+            // Head
+            if (part.direction == 'left') graphics.drawImage(snakeHeadL, part.x, part.y, blockwidth, blockheight);
+            if (part.direction == 'right') graphics.drawImage(snakeHeadR, part.x, part.y, blockwidth, blockheight);
+            if (part.direction == 'up') graphics.drawImage(snakeHeadU, part.x, part.y, blockwidth, blockheight);
+            if (part.direction == 'down') graphics.drawImage(snakeHeadD, part.x, part.y, blockwidth, blockheight);
+        } else if (i == snake.length - 1) {
+            // Tail
+            if (part.direction == 'left') graphics.drawImage(tailL, part.x, part.y, blockwidth, blockheight);
+            if (part.direction == 'right') graphics.drawImage(tailr, part.x, part.y, blockwidth, blockheight);
+            if (part.direction == 'up') graphics.drawImage(tailu, part.x, part.y, blockwidth, blockheight);
+            if (part.direction == 'down') graphics.drawImage(taild, part.x, part.y, blockwidth, blockheight);
+        } else {
+            // Body
+            graphics.drawImage(body, part.x, part.y, blockwidth, blockheight);
+        }
     }
 }
 //used to animate, continually draws whats in animate
