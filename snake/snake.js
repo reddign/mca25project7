@@ -14,22 +14,23 @@ snakeHeadD.src = 'snake/SnakeHeadD.png'
 document.addEventListener('keydown', getKeyInput);
 /*  VARIABLES    */
 let blocks = []
-let round = 3;
+let round = 4;
 let blocksdrawn = 0;
+let blockheight = 0
+let blockwidth = 0
 let x = 0
 let y = 0
 let foodx = 0
 let foody = 0
-let snakex = 400
-let snakey = 400
-let blockheight = 0
-let blockwidth = 0
+let snakex = 0
+let snakey = 0
 let speed = 5
 let moveUp = false
 let moveLeft = false
 let moveDown = false
 let moveRight = false
 let snakedir = 'left'
+let levelStart = false
 
 /*  FUNCTIONS   */
 function drawblocks(){
@@ -53,62 +54,64 @@ function drawblocks(){
         }
     }
 }
+function reset(){
+    snakex
+}
 function eat(change){
     if(change==true){
-        foodx = blocks[Math.floor(Math.random(blocksdrawn))[0]]
-        foody = blocks[Math.floor(Math.random(blocksdrawn))[1]]
+        let random = Math.floor(Math.random()*blocksdrawn)
+        foodx = blocks[random][0]
+        foody = blocks[random][1]
+        console.log("random: " + random)
+        console.log("foodx: " + foodx)
+        console.log("foody: " + foody)
     }
 }
-function drawFood(){
-    graphics.drawImage(apple,foodx,foody,blockwidth,blockheight)
+function drawFood(x,y){
+    graphics.drawImage(apple,x,y,blockwidth,blockheight)
 }
 function animate(){
     drawblocks();
-    drawFood();
+    if(!levelStart){
+        reset();
+        eat(true);
+        levelStart=true
+    }
+    drawFood(foodx,foody);
     move();
     drawSnake(snakex,snakey,snakedir);
-    for(i=0;i<blocks.length;i++){
-        if((snakex<=blocks[i[0]]+blockwidth && snakey<=blocks[i[1]] //top right corner
-            || snakex<=blocks[i[0]] && snakey<=blocks[i[1]] //top left corner
-            || snakex<=blocks[i[0]] && snakey<=blocks[i[1]]+blockheight //bottom left corner
-            || snakex<=blocks[i[0]]+blockwidth && snakey<=blocks[i[1]]+blockheight //bottom right corner
-        ) && (foodx<=blocks[i[0]]+blockwidth && foody<=blocks[i[1]] //top right corner
-            || foodx<=blocks[i[0]] && foody<=blocks[i[1]] //top left corner
-            || foodx<=blocks[i[0]] && foody<=blocks[i[1]]+blockheight //bottom left corner
-            || foodx<=blocks[i[0]]+blockwidth && foody<=blocks[i[1]]+blockheight //bottom right corner
-        )){
-            eat(true)
-        }
+    if(snakex == foodx && snakey == foody){
+        eat(true)
+        console.log(foodx,foody)
     }
 }
 function move(event){
     if(moveUp==true){
         if(snakey>0){
-            snakey-=speed
+            snakey-=blockheight
             snakedir='up'
         }
     }
     if(moveLeft==true){
         if(snakex>0){
-            snakex-=speed
+            snakex-=blockwidth
             snakedir='left'
         }
     }
     if(moveDown==true){
-        if(snakey<500){
-            snakex+=speed
+        if(snakey<500-blockheight){
+            snakey+=blockheight
             snakedir='down'
         }
     }
     if(moveRight==true){
-        if(snakex<500){
-            snakex+=speed
+        if(snakex<500-blockwidth){
+            snakex+=blockwidth
             snakedir='right'
         }
     }
 }
 function getKeyInput(event){
-    console.log("key: "+event.key)
     if(event.key == 'w' || event.key == 'ArrowUp'){
         moveUp = true;
         moveDown = moveRight = moveLeft = false;
@@ -127,7 +130,6 @@ function getKeyInput(event){
     }
 }
 function drawSnake(x,y,facing){
-    console.log(snakey + " " + snakex);
     if(facing == 'left'){
         console.log('left');
         graphics.drawImage(snakeHeadL,x,y,blockwidth,blockheight)
@@ -146,4 +148,4 @@ function drawSnake(x,y,facing){
     }
 }
 //used to animate, continually draws whats in animate
-let loop = window.setInterval(animate, 100)
+let loop = window.setInterval(animate, 350)
