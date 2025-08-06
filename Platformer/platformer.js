@@ -5,6 +5,8 @@ console.log("Let's make a game.");
 let canvas = document.querySelector("canvas");
 let graphics = canvas.getContext("2d");
 let faceimg = document.getElementById("face");
+
+
 // canvas.focus();
 let x = 20;
 let y = 100;
@@ -22,14 +24,13 @@ let directionx = 1;
 let directiony = 1
 let radius = 10
 let lives = 3
-let score = 0
 let again = "whatever";
 let gameOver = false;
 
 
 
 function animate(){
-    drawperson(40,40);
+    drawperson(x,y);
     if (lives>0){
         clear();
         scoreboard()
@@ -42,7 +43,7 @@ function animate(){
         paddle5()
         // paddle6()
         
-        console.log("lives", lives, "score", score)
+        //console.log("lives", lives)
     }else if(!gameOver){
         endscreen();
     }
@@ -52,7 +53,7 @@ function animate(){
 function scoreboard(){
     graphics.fillStyle = "yellow"
     graphics.font = "bold 28px serif";
-    let scoreStr = "Lives: " + lives + " Scores: " + score;
+    let scoreStr = "Lives: " + lives;
     graphics.fillText(scoreStr, 10,30)
 }
 
@@ -107,7 +108,7 @@ function paddle5(){
 //    }
 // }
 
-window.setInterval(animate,FPS/1000)
+window.setInterval(animate,FPS/1000);
 
 function endscreen(){
     if(lives<=0){
@@ -120,8 +121,25 @@ function endscreen(){
         //if their answer was y 
         //refresh  ---
         
-    }
-
-   
+    }  
 }
 
+document.addEventListener('keydown',(event)=>{
+    console.log(`Key pressed: ${event.key}`);
+    console.log(`Key code: ${event.code}`);
+
+    if(event.key === 'ArrowUp'){
+        y -= 2;
+        
+    }else if(event.key === 'ArrowDown'){
+        y += 2;
+        
+    }else if(event.key === 'ArrowLeft'){
+        x -= 2;
+        
+    }else if(event.key === 'ArrowRight'){
+        x += 2;
+        
+    }
+
+});

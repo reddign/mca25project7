@@ -1,6 +1,6 @@
 
     const box = document.querySelector('#box');
-    const sprite = document.querySelector('#sprite');
+    const sprite = document.getElementById('face');
     const button = document.querySelector('button');
     let speed = 5;
 

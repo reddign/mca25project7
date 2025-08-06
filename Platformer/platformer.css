@@ -1,6 +1,10 @@
 h1{
     text-align: center;
 }
+body, html {
+overflow: hidden;
+
+}
 canvas {
     padding-left: 0;
     padding-right: 0;
