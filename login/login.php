@@ -2,7 +2,7 @@
 //process login
 session_start();
 $u = $_POST["user"];
-$p = $_POST["pass"];
+$p = $_POST["password"];
 
 // connect to database
 // 
@@ -24,11 +24,11 @@ $rows = $result -> fetch_all(MYSQLI_ASSOC);
 
 
 //change if statement
-if (is_array($rows) && array_key_exists(0, $rows) && $rows[0]["approved"]==1){
+if (is_array($rows) && array_key_exists(0, $rows)){
     //do something to keep user logged in
     $_SESSION["loggedin"] = "YES";
     $_SESSION["userID"] = $u;
-    header("location: index.htm");
+    header("location: ../index.htm");
 }else{
     $_SESSION["loggedin"] = "NO";
     $_SESSION["userID"] = "";

@@ -2,11 +2,11 @@
 //process login
 session_start();
 $u = $_POST["user"];
-$p = $_POST["pass"];
+$p = $_POST["password"];
 
 if($_SERVER['HTTP_HOST']=="127.0.0.1"){
     $mysqli = new mysqli("127.0.0.1","root","","mca");
-}else{ //revisit to get password working
+}else{ 
     $mysqli = new mysqli("195.35.59.14","u121755072_games",'J=$ARBm8',"u121755072_gamesdb");
 }
 
