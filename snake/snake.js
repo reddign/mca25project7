@@ -14,7 +14,7 @@ snakeHeadD.src = 'snake/SnakeHeadD.png'
 document.addEventListener('keydown', getKeyInput);
 /*  VARIABLES    */
 let blocks = []
-let round = 4;
+let round = 3;
 let blocksdrawn = 0;
 let blockheight = 0
 let blockwidth = 0
