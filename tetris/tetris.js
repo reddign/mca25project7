@@ -8,7 +8,7 @@ let pieceY=0
 let grav=120
 let pieceShape=[[],[],[],[]]
 let pieceCurrent=""
-let queueInd=0
+let queueInd=-1
 let process=window.setInterval(tick,1/60)
 let pieceShapeArray=[
     [[0,-1],[-1,-1],[0,0],[1,0]],
@@ -40,7 +40,6 @@ function update(){
         }
     }
     pieceX+=movePiece()
-    console.log(pieceY)
 }
 function draw(){
     graphics.fillStyle="black"
@@ -53,14 +52,14 @@ function draw(){
     }
     graphics.strokeStyle="gainsboro"
     graphics.strokeRect(490,60,300,600)
-    for(let r=0;r<board.length;r++){
+    /*for(let r=0;r<board.length;r++){
         for(let c=0;c<10;c++){
             if(board[c][r]!=7){ // color handling works hopefully but untested
                 graphics.fillStyle=colorArray[board[c][r]]
                 graphics.fillRect() // TODO: draw rectangles (o yeah y axis is inverted in the table btw so thats fun (its like this intentionally dont worry about it))
             }
         }
-    }
+    }*/
     for(let i=0;i<4;i++){
         graphics.fillStyle=colorArray[pieceCurrent]
         graphics.fillRect(490+30*(pieceX+pieceShape[i][0]),60+30*(pieceY+pieceShape[i][1]),30,30)
@@ -113,10 +112,11 @@ function newPiece(){ // should work
     }
 }
 function onGround(){
-    if(pieceY>=19){
+    if(pieceY+getLowest()>=19){
         return true
     }
-    if(19-board.length<=pieceY){
+    console.log(board.length,pieceY,getLowest())
+    if(19-board.length<=pieceY+getLowest()){
         for(let i=0;i<4;i++){
             if(board[pieceX+pieceShape[i][0]][19-(pieceY+pieceShape[i][1]+1)]!=7){
                 return true
@@ -126,11 +126,31 @@ function onGround(){
     return false
 }
 function placePiece(){
-    /*for(let i=board.length;i<=19-(pieceY+pieceShape[0][1]);i++){
+    for(let i=board.length;i<=19-(pieceY+pieceShape[0][1]);i++){
         board.push([7,7,7,7,7,7,7,7,7,7])
     }
     for(let i=0;i<4;i++){
-        board[pieceShape[i][0]+pieceX][19-(pieceY+pieceShape[i][1])]=pieceCurrent
-    }*/
+        console.log(pieceShape[i][0]+pieceX,19-(pieceY+pieceShape[i][1]))
+        //board[pieceShape[i][0]+pieceX][19-(pieceY+pieceShape[i][1])]=pieceCurrent
+        board[19-(pieceY+pieceShape[i][1])][pieceShape[i][0]+pieceX]=pieceCurrent
+    }
     newPiece() // finish this fr
+}
+function getLowest(){
+    let temp=-1
+    for(let i=0;i<4;i++){
+        if(temp<pieceShape[i][1]){
+            temp=pieceShape[i][1]
+        }
+    }
+    return temp
+}
+function getHighest(){
+    let temp=1
+    for(let i=0;i<4;i++){
+        if(temp>pieceShape[i][1]){
+            temp=pieceShape[i][1]
+        }
+    }
+    return temp
 }
