@@ -153,3 +153,6 @@ function getHighest(){
     }
     return temp
 }
+function brayden(){
+    console.log(true)
+}
