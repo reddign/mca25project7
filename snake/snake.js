@@ -11,6 +11,10 @@ const snakeHeadU = new Image()
 snakeHeadU.src = 'snake/SnakeHeadU.png'
 const snakeHeadD = new Image()
 snakeHeadD.src = 'snake/SnakeHeadD.png'
+const snakeHeadD = new Image()
+snakeHeadD.src = 'snake/SnakeHeadD.png'
+const tail = new Image()
+tail.src = 'snake/SnakeTail.png'
 document.addEventListener('keydown', getKeyInput);
 /*  VARIABLES    */
 let blocks = []
@@ -31,6 +35,9 @@ let moveDown = false
 let moveRight = false
 let snakedir = 'left'
 let levelStart = false
+let snakebody = 0
+let turning = false
+
 
 /*  FUNCTIONS   */
 function drawblocks(){
@@ -55,7 +62,11 @@ function drawblocks(){
     }
 }
 function reset(){
-    snakex
+    snakex=500-blockwidth
+    snakey=500-blockheight
+    moveUp = moveLeft = moveDown = moveRight = false
+    snakedir = 'left'
+    eat(true)
 }
 function eat(change){
     if(change==true){
