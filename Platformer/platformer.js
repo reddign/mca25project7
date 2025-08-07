@@ -36,6 +36,7 @@ function animate(){
         scoreboard()
         endscreen()
         
+       // createPaddle(100,100,20,40)
         paddle1()
         paddle2()
         paddle3()
@@ -50,6 +51,7 @@ function animate(){
     }
 }
 
+const coords = {}
 
 function scoreboard(){
     graphics.fillStyle = "yellow"
@@ -68,6 +70,14 @@ function clear(){
     graphics.fillStyle = "rgb(0,0,0, 0.4)";
     graphics.fillRect(0,0, canvas.width, canvas.height)
 }
+
+// function createPaddle(x,y,width,height){
+//     graphics.fillStyle="white"
+//     graphics.fillRect(x,y,width,height)
+
+// }
+
+
 
 function paddle1(){
     graphics.fillStyle = "white"
@@ -96,6 +106,7 @@ function paddle5(){
 function checkIntersection(){
 
 
+    
 
 //intersect paddle
     if(x+radius > paddlex1 && x+radius < paddlex1 +paddlewidth
