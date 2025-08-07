@@ -25,6 +25,7 @@ let directionx = 1;
 let directiony = 1
 let radius = 50
 let score = 0
+let lives = 2
 let again = "whatever";
 let gameOver = false;
 
@@ -107,7 +108,8 @@ function animate() {
         drawperson(x, y);
         scoreboard();
         checkCollision();
-        drawfly()
+        drawfly();
+
     } else if (!gameOver) {
         endscreen();
     }
@@ -285,6 +287,23 @@ function checkCollision(newX, newY) {
     return false; // No collision
 }
 
+function checkFlyCollision(newX, newY) {
+    const playerWidth = 25;
+    const playerHeight = 25;
+
+    const flyX = 700;
+    const flyY = 25;
+    const flyWidth = 20;
+    const flyHeight = 20;
+
+    return (
+        newX < flyX + flyWidth &&
+        newX + playerWidth > flyX &&
+        newY < flyY + flyHeight &&
+        newY + playerHeight > flyY
+    );
+}
+
 
 
 document.addEventListener('keydown', (event) => {
@@ -305,5 +324,9 @@ document.addEventListener('keydown', (event) => {
     if (!checkCollision(newX, newY)) {
         x = newX;
         y = newY;
+    }
+
+    if (checkFlyCollision(x, y)) {
+        score+=1;
     }
 });
