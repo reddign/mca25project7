@@ -2,7 +2,7 @@ let canvas = document.querySelector("canvas");
 const graphics = canvas.getContext("2d");
 canvas.focus();
 
-// Images
+/* Images */
 const apple = new Image(); apple.src = 'apple.png';
 const snakeHeadL = new Image(); snakeHeadL.src = 'snake/SnakeHeadL.png';
 const snakeHeadR = new Image(); snakeHeadR.src = 'snake/SnakeHeadR.png';
@@ -14,11 +14,17 @@ const tailL = new Image(); tailL.src = 'snake/SnakeTailL.png';
 const tailr = new Image(); tailr.src = 'snake/SnakeTailR.png';
 const LRbody = new Image(); LRbody.src = 'snake/SnakebodyLR.png';
 const UDbody = new Image(); UDbody.src = 'snake/SnakebodyUD.png';
-const turn = new Image(); turn.src = 'snake/SnakeTurn.png';
+const turnUR = new Image(); turnUR.src = 'snake/SnakeTurnUR.png';
+const turnLD = new Image(); turnLD.src = 'snake/SnakeTurnLD.png';
+const turnLU = new Image(); turnLU.src = 'snake/SnakeTurnLU.png';
+const turnRD = new Image(); turnRD.src = 'snake/SnakeTurnRD.png';
 
 document.addEventListener('keydown', getKeyInput);
+canvas.addEventListener('click', restartGame);
 
 /* VARIABLES */
+let eating = false;
+let level = 'ready';
 let blocks = [];
 let snake = [];
 let round = 3;
@@ -82,20 +88,29 @@ function eat(change) {
 function drawFood(x, y) {
     graphics.drawImage(apple, x, y, blockwidth, blockheight);
 }
-
 function showWin() {
-    graphics.fillStyle = 'red';
+    graphics.fillStyle = 'purple';
     graphics.fillRect(50, 50, 400, 400);
     graphics.fillStyle = 'black';
     graphics.font = '60px Arial';
     graphics.textAlign = 'center';
     graphics.textBaseline = 'middle';
     graphics.fillText('YOU WIN!!!', 250, 250);
+    graphics.fillStyle = 'black';
+    graphics.fillRect(150, 320, 200, 60);
+    graphics.strokeStyle = 'white';
+    graphics.strokeRect(150, 320, 200, 60);
+    graphics.fillStyle = '#white';
+    graphics.font = '36px Arial';
+    graphics.fillText('Restart', 250, 350);
+    levelStart = false;
+    level = 'wait';
+    window.clearInterval(loop);
 }
 
 function animate() {
     drawblocks();
-    if (!levelStart) {
+    if (!levelStart && level == 'ready') {
         reset();
         snake = [
             { x: snakex, y: snakey, direction: 'left' }  // Head
@@ -110,13 +125,57 @@ function animate() {
         drawSnake();
 
         if (snake[0].x == foodx && snake[0].y == foody) {
+            eating = true;
             const last = snake[snake.length - 1];
             snake.push({ x: last.x, y: last.y, direction: last.direction });
             eat(true);
+        }else{
+            eating = false;
         }
     } else {
         showWin();
     }
+    if((snake[0].x < 0 || snake[0].x >= canvas.width ||
+        snake[0].y < 0 || snake[0].y >= canvas.height)){
+            Die();
+    }
+    for(i=1; i<snake.length; i++){
+        if(i!=0){
+            if((snake[0].x == snake[i].x && snake[0].y == snake[i].y) && eating == false){
+            Die();
+        }
+        }
+    }
+}
+function Die(){
+    graphics.fillStyle = 'red'
+    graphics.fillRect(50, 50, 400, 400)
+    graphics.fillStyle = 'black'
+    graphics.font = '60px Arial'
+    graphics.textAlign = 'center'
+    graphics.textBaseline = 'middle'
+    graphics.fillText('YOU DIED!!!', 250, 250)
+    graphics.fillStyle = '#fff';
+    graphics.fillRect(150, 320, 200, 60);
+    graphics.strokeStyle = '#000';
+    graphics.strokeRect(150, 320, 200, 60);
+    graphics.fillStyle = '#000';
+    graphics.font = '36px Arial';
+    graphics.fillText('Restart', 250, 350);
+    levelStart = false;
+    level = 'wait';
+    window.clearInterval(loop);
+}
+
+function restartGame(event) {
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    if ((x >= 150 && x <= 350 && y >= 320 && y <= 380) && (level == 'wait')) {
+        level = 'ready';
+    }
+    loop = window.setInterval(animate, 350);
+    reset();
 }
 
 function updateSnakePosition() {
@@ -166,74 +225,62 @@ function drawSnake() {
         let part = snake[i];
         const prev = snake[i - 1];
         const next = snake[i + 1];
-        const turning = (prev > 1 && prev.direction !== part.direction && next.direction !== part.direction);
 
-        //TURNING
-        if(i === 1 && turning == true){
-            if (part.direction == 'left'){
-                graphics.drawImage(turn, part.x, part.y, blockwidth, blockheight);
-                turning=false
-            }
-            if (part.direction == 'left'){
-                graphics.drawImage(turn, part.x, part.y, blockwidth, blockheight);
-                turning=false
-            }
-            if (part.direction == 'left'){
-                graphics.drawImage(turn, part.x, part.y, blockwidth, blockheight);
-                turning=false
-            }
-            if (part.direction == 'left'){
-                graphics.drawImage(turn, part.x, part.y, blockwidth, blockheight);
-                turning=false
-            }
-        }
-
-
-        else if (i === snake.length - 1) {
-            if (part.direction == 'left') graphics.drawImage(tailL, part.x, part.y, blockwidth, blockheight);
-            if (part.direction == 'right') graphics.drawImage(tailr, part.x, part.y, blockwidth, blockheight);
-            if (part.direction == 'up') graphics.drawImage(tailu, part.x, part.y, blockwidth, blockheight);
-            if (part.direction == 'down') graphics.drawImage(taild, part.x, part.y, blockwidth, blockheight);
-        }
-
-
-        //BODY
-        else if(i>1){
-            if (part.direction == 'left' || part.direction == 'right') {
-                graphics.drawImage(LRbody, part.x, part.y, blockwidth, blockheight);
-            } else if (part.direction == 'up' || part.direction == 'down n    ') {
-                graphics.drawImage(UDbody, part.x, part.y, blockwidth, blockheight);
-            }
-        }
-        
-        //HEAD
-        else if (i === 0) {
+        // HEAD
+        if (i === 0) {
             if (part.direction == 'left') graphics.drawImage(snakeHeadL, part.x, part.y, blockwidth, blockheight);
             if (part.direction == 'right') graphics.drawImage(snakeHeadR, part.x, part.y, blockwidth, blockheight);
             if (part.direction == 'up') graphics.drawImage(snakeHeadU, part.x, part.y, blockwidth, blockheight);
             if (part.direction == 'down') graphics.drawImage(snakeHeadD, part.x, part.y, blockwidth, blockheight);
         }
-
         // TAIL
-        
-
-        // //BODY
-        // else {
-
-
-        //     const horizontal = part.direction === 'left' || part.direction === 'right';
-        //     const vertical = part.direction === 'up' || part.direction === 'down';
-
-            
-
-        //     if (turning) {
-        //         graphics.drawImage(turn, part.x, part.y, blockwidth, blockheight);
-        //     } else if (horizontal) {
-        //         graphics.drawImage(LRbody, part.x, part.y, blockwidth, blockheight);
-        //     } else if (vertical) {
-        //         graphics.drawImage(UDbody, part.x, part.y, blockwidth, blockheight);
-        //     }
-        // }
+        else if (i === snake.length - 1) {
+            if (part.direction == 'left') graphics.drawImage(tailL, part.x, part.y, blockwidth, blockheight); // tail came from left, so point right
+            if (part.direction == 'right') graphics.drawImage(tailr, part.x, part.y, blockwidth, blockheight); // tail came from right, so point left  
+            if (part.direction == 'up') graphics.drawImage(tailu, part.x, part.y, blockwidth, blockheight); // tail came from up, so point down
+            if (part.direction == 'down') graphics.drawImage(taild, part.x, part.y, blockwidth, blockheight); // tail came from down, so point up
+        }
+        // BODY
+        else {
+            if (prev && part.direction !== prev.direction) {
+                graphics.save();
+                
+                // prev.direction = where we're going TO
+                // part.direction = where we came FROM
+                
+                // Going right from up OR going down from left
+                if ((part.direction == 'up' && prev.direction == 'right') ||
+                    (part.direction == 'left' && prev.direction == 'down')) {
+                    graphics.drawImage(turnRD, part.x, part.y, blockwidth, blockheight);
+                }
+                // Going right from down OR going up from left
+                else if ((part.direction == 'down' && prev.direction == 'right') ||
+                        (part.direction == 'left' && prev.direction == 'up')) {
+                    graphics.drawImage(turnUR, part.x, part.y, blockwidth, blockheight);
+                }
+                // Going left from up OR going down from right
+                else if ((part.direction == 'up' && prev.direction == 'left') ||
+                        (part.direction == 'right' && prev.direction == 'down')) {
+                    graphics.drawImage(turnLD, part.x, part.y, blockwidth, blockheight);
+                }
+                // Going left from down OR going up from right
+                else if ((part.direction == 'down' && prev.direction == 'left') ||
+                        (part.direction == 'right' && prev.direction == 'up')) {
+                    graphics.drawImage(turnLU, part.x, part.y, blockwidth, blockheight);
+                }
+                else {
+                    graphics.drawImage(turnLU, part.x, part.y, blockwidth, blockheight);
+                }
+                
+                graphics.restore();
+            } else {
+                if (part.direction == 'left' || part.direction == 'right') {
+                    graphics.drawImage(LRbody, part.x, part.y, blockwidth, blockheight);
+                } else if (part.direction == 'up' || part.direction == 'down') {
+                    graphics.drawImage(UDbody, part.x, part.y, blockwidth, blockheight);
+                }
+            }
+        }
     }
 }
 
