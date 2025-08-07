@@ -109,7 +109,7 @@ function animate() {
         scoreboard();
         checkCollision();
         drawfly();
-
+        endscreen();
     } else if (!gameOver) {
         endscreen();
     }
@@ -330,3 +330,18 @@ document.addEventListener('keydown', (event) => {
         score+=1;
     }
 });
+
+function endscreen(){
+    if(score>=1){
+        graphics.fillStyle="blue";
+        graphics.fillRect(0,0,canvas.width,canvas.height);
+        graphics.fillStyle="green";
+        graphics.fillText("You won!",75,50);
+
+        graphics.fillText("Refresh to start again!",75,100);
+       
+    }
+
+   
+}
+
