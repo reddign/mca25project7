@@ -84,3 +84,11 @@ body, html{
 .login{
     float: right;
 }
+.textpage{
+    text-align: center
+}
+.tree{
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+}
