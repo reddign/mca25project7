@@ -5,6 +5,7 @@ console.log("Let's make a game.");
 let canvas = document.querySelector("canvas");
 let graphics = canvas.getContext("2d");
 let faceimg = document.getElementById("face");
+let flyimg = document.getElementById("fly");
 
 
 // canvas.focus();
@@ -18,12 +19,12 @@ let paddlex3 = 60 * 3
 let paddley3 = 120 * 3
 let paddlewidth = 5 * 3
 let paddleheight = 80 * 3
-let FPS = 5;
+let FPS = 60;
 let speed = 2;
 let directionx = 1;
 let directiony = 1
 let radius = 50
-let lives = 3
+let score = 0
 let again = "whatever";
 let gameOver = false;
 
@@ -106,6 +107,7 @@ function animate() {
         drawperson(x, y);
         scoreboard();
         checkCollision();
+        drawfly()
     } else if (!gameOver) {
         endscreen();
     }
@@ -117,7 +119,7 @@ const coords = {}
 function scoreboard() {
     graphics.fillStyle = "yellow"
     graphics.font = "bold 28px serif";
-    let scoreStr = "Lives: " + lives;
+    let scoreStr = "Score: " + score;
     graphics.fillText(scoreStr, 10, 30)
 }
 
@@ -126,6 +128,9 @@ function drawperson(x, y) {
     graphics.drawImage(faceimg, x, y, 20, 20)
 }
 
+function drawfly(){
+    graphics.drawImage(flyimg, 700, 25, 20, 20)
+}
 
 function clear() {
     graphics.fillStyle = "rgba(0,0,0, 0.4)";
