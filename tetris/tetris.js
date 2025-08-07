@@ -34,6 +34,8 @@ let keyboardSpace=false
 let keyboardAHold=false
 let keyboardDHold=false
 let xMoveFacing=0
+let heldPiece=7
+let canHold=true
 document.addEventListener('keydown',keyDown)
 document.addEventListener('keyup',keyUp)
 setup()
@@ -51,12 +53,18 @@ function update(){
             placePiece()
         }
     }else{
-        if(timer%grav==0){
+        if(timer%grav==0||timer%Math.floor(grav/4)==0&&keyboardS){
             pieceY+=1
         }
     }
     if(moveHoriz(input.x)){
         pieceX+=input.x
+    }
+    if(input.rotate!=0){
+        rotatema(input.rotate)
+    }
+    if(input.hold&&canHold){
+        hold()
     }
 }
 function draw(){
@@ -139,7 +147,8 @@ function onGround(){
     return false
 }
 function placePiece(){
-    for(let i=board.length;i<=19-(pieceY+pieceShape[0][1]);i++){
+    canHold=true
+    for(let i=board.length;i<=19-(pieceY+getHighest());i++){
         board.push([7,7,7,7,7,7,7,7,7,7])
     }
     for(let i=0;i<4;i++){
@@ -215,18 +224,9 @@ function keyUp(event){
     if(event.code=='KeyS'){
         keyboardS=false
     }
-    if(event.code=='KeyN'){
-        keyboardN=false
-    }
-    if(event.code=='KeyM'){
-        keyboardM=false
-    }
-    if(event.code=='Space'){
-        keyboardSpace=false
-    }
 }
 function inputProcess(){
-    let temp={x:0,y:0,hold:false}
+    let temp={x:0,y:0,hold:false,rotate:0}
     if(dasTimer>0){
         dasTimer--
     }
@@ -255,7 +255,18 @@ function inputProcess(){
     if(!(keyboardAHold||keyboardDHold)){
         xMoveFacing=0
     }
-    console.log(dasTimer)
+    if(keyboardN){
+        temp.rotate--
+        keyboardN=false
+    }
+    if(keyboardM){
+        temp.rotate++
+        keyboardM=false
+    }
+    if(keyboardSpace){
+        temp.hold=true
+        keyboardSpace=false
+    }
     return temp
 }
 function moveHoriz(move){
@@ -270,9 +281,63 @@ function moveHoriz(move){
     }
     return true
 }
+function rotatema(butHeresTheRotater){
+    let temp=[[0,0],[0,0],[0,0],[0,0]]
+    if(butHeresTheRotater==1){
+        for(let i=0;i<4;i++){
+            temp[i][0]=-pieceShape[i][1]
+            temp[i][1]=pieceShape[i][0]
+        }
+    }else{
+        for(let i=0;i<4;i++){
+            temp[i][0]=pieceShape[i][1]
+            temp[i][1]=-pieceShape[i][0]
+        }
+    }
+    if(collide(temp)){
+        pieceShape=temp
+    }
+}
+function collide(mino){
+    for(let i=0;i<4;i++){
+        if(
+            (pieceX+mino[i][0]>9||pieceX+mino[i][0]<0)||
+            ((19-board.length<pieceY+mino[i][1])&&
+            (board[19-(pieceY+mino[i][1])][pieceX+mino[i][0]]!=7))
+        ){
+            return false
+        }
+    }
+    return true
+}
+function hold(){
+    canHold=false
+    if(heldPiece==7){
+        heldPiece=pieceCurrent
+        newPiece()
+    }else{
+        let temp=pieceCurrent
+        pieceCurrent=heldPiece
+        heldPiece=temp
+        placeTimer=placeTimerReset
+        if(pieceCurrent==2||pieceCurrent==4){
+            pieceX=4.5
+            if(pieceCurrent==2){
+                pieceY=-1.5
+            }else{
+                pieceY=-.5
+            }
+        }else{
+            pieceX=4
+            pieceY=-1
+        }
+        pieceShape=pieceShapeArray[pieceCurrent]
+    }
+}
 function brayden(){
     console.log(true)
 }
 function define(){
     console.log('real integer for x value very important')
 }
+brayden()
