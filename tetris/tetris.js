@@ -145,6 +145,18 @@ function placePiece(){
     for(let i=0;i<4;i++){
         board[19-(pieceY+pieceShape[i][1])][pieceShape[i][0]+pieceX]=pieceCurrent
     }
+    for(let r=board.length-1;r>=0;r--){
+        let temp=true
+        for(let c=0;c<10;c++){
+            if(board[r][c]==7){
+                temp=false
+                break
+            }
+        }
+        if(temp){
+            board.splice(r,1)
+        }
+    }
     newPiece() // finish this fr (maybe finished? idk n idrc rn) (i think its finished now ok)
 }
 function getLowest(){
