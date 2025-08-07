@@ -9,7 +9,7 @@ let grav=30
 let pieceShape=[[],[],[],[]]
 let pieceCurrent=""
 let queueInd=-1
-let process=window.setInterval(tick,1/60)
+let process=window.setInterval(tick,1000/60)
 let pieceShapeArray=[
     [[0,-1],[-1,-1],[0,0],[1,0]],
     [[1,-1],[0,0],[1,0],[-1,0]],
@@ -33,7 +33,9 @@ let keyboardM=false
 let keyboardSpace=false
 let keyboardAHold=false
 let keyboardDHold=false
+let xMoveFacing=0
 document.addEventListener('keydown',keyDown)
+document.addEventListener('keyup',keyUp)
 setup()
 
 function tick(){
@@ -42,6 +44,7 @@ function tick(){
 }
 function update(){
     timer++
+    let input=inputProcess()
     if(onGround()){
         placeTimer--
         if(placeTimer<0){
@@ -52,7 +55,9 @@ function update(){
             pieceY+=1
         }
     }
-    pieceX+=inputProcess()
+    if(moveHoriz(input.x)){
+        pieceX+=input.x
+    }
 }
 function draw(){
     graphics.fillStyle="black"
@@ -138,10 +143,9 @@ function placePiece(){
         board.push([7,7,7,7,7,7,7,7,7,7])
     }
     for(let i=0;i<4;i++){
-        console.log(pieceShape[i][0]+pieceX,19-(pieceY+pieceShape[i][1]))
         board[19-(pieceY+pieceShape[i][1])][pieceShape[i][0]+pieceX]=pieceCurrent
     }
-    newPiece() // finish this fr (maybe finished? idk n idrc rn)
+    newPiece() // finish this fr (maybe finished? idk n idrc rn) (i think its finished now ok)
 }
 function getLowest(){
     let temp=-1
@@ -162,48 +166,47 @@ function getHighest(){
     return temp
 }
 function keyDown(event){
-    if(event.code=='keyA'){
+    if(event.code=='KeyA'){
         keyboardA=true
     }
-    if(event.code=='keyD'){
+    if(event.code=='KeyD'){
         keyboardD=true
     }
-    if(event.code=='keyW'){
+    if(event.code=='KeyW'){
         keyboardW=true
     }
-    if(event.code=='keyS'){
+    if(event.code=='KeyS'){
         keyboardS=true
     }
-    if(event.code=='keyN'){
+    if(event.code=='KeyN'){
         keyboardN=true
     }
-    if(event.code=='keyM'){
+    if(event.code=='KeyM'){
         keyboardM=true
     }
     if(event.code=='Space'){
         keyboardSpace=true
     }
-    console.log(event.code)
 }
 function keyUp(event){
-    if(event.code=='keyA'){
+    if(event.code=='KeyA'){
         keyboardA=false
         keyboardAHold=false
     }
-    if(event.code=='keyD'){
+    if(event.code=='KeyD'){
         keyboardD=false
-        keyboardDhold=false
+        keyboardDHold=false
     }
-    if(event.code=='keyW'){
+    if(event.code=='KeyW'){
         keyboardW=false
     }
-    if(event.code=='keyS'){
+    if(event.code=='KeyS'){
         keyboardS=false
     }
-    if(event.code=='keyN'){
+    if(event.code=='KeyN'){
         keyboardN=false
     }
-    if(event.code=='keyM'){
+    if(event.code=='KeyM'){
         keyboardM=false
     }
     if(event.code=='Space'){
@@ -211,16 +214,53 @@ function keyUp(event){
     }
 }
 function inputProcess(){
-    let temp=[x=0,y=0,hold=false]
+    let temp={x:0,y:0,hold:false}
     if(dasTimer>0){
         dasTimer--
     }
-    if(keyboardA||keyboardAHold&&dasTimer==0){
-        out.x=1
-        console.log(out.x)
+    if(keyboardA||keyboardAHold&&dasTimer==0&&xMoveFacing==-1){
+        temp.x=-1
+        if(keyboardA){
+            keyboardA=false
+            keyboardAHold=true
+            dasTimer=dasDelay
+            xMoveFacing=-1
+        }else{
+            dasTimer=arr
+        }
     }
-    return 0 // placeholder
+    if(keyboardD||keyboardDHold&&dasTimer==0&&xMoveFacing==1){
+        temp.x=1
+        if(keyboardD){
+            keyboardD=false
+            keyboardDHold=true
+            dasTimer=dasDelay
+            xMoveFacing=1
+        }else{
+            dasTimer=arr
+        }
+    }
+    if(!(keyboardAHold||keyboardDHold)){
+        xMoveFacing=0
+    }
+    console.log(dasTimer)
+    return temp
+}
+function moveHoriz(move){
+    for(let i=0;i<4;i++){
+        if(
+            (pieceX+pieceShape[i][0]+move>9||pieceX+pieceShape[i][0]+move<0)||
+            ((19-board.length<pieceY+pieceShape[i][1])&&
+            (board[19-(pieceY+pieceShape[i][1])][pieceX+pieceShape[i][0]+move]!=7))
+        ){
+            return false
+        }
+    }
+    return true
 }
 function brayden(){
     console.log(true)
+}
+function define(){
+    console.log('real integer for x value very important')
 }
