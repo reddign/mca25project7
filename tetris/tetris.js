@@ -21,6 +21,19 @@ let pieceShapeArray=[
 let colorArray=["red","orange","yellow","green","cyan","blue","purple"]
 let placeTimer=0
 let placeTimerReset=30
+let dasTimer=0
+let dasDelay=8
+let arr=2
+let keyboardA=false
+let keyboardD=false
+let keyboardW=false
+let keyboardS=false
+let keyboardN=false
+let keyboardM=false
+let keyboardSpace=false
+let keyboardAHold=false
+let keyboardDHold=false
+document.addEventListener('keydown',keyDown)
 setup()
 
 function tick(){
@@ -39,7 +52,7 @@ function update(){
             pieceY+=1
         }
     }
-    pieceX+=movePiece()
+    pieceX+=inputProcess()
 }
 function draw(){
     graphics.fillStyle="black"
@@ -87,9 +100,6 @@ function fillQueue(){ // should work
     for(let i=0;i<7;i++){
         pieceQueue.push(bag[i])
     }
-}
-function movePiece(){ // TODO: add keyboard input + movement logic
-    return 0
 }
 function newPiece(){ // should work
     queueInd++
@@ -150,6 +160,66 @@ function getHighest(){
         }
     }
     return temp
+}
+function keyDown(event){
+    if(event.code=='keyA'){
+        keyboardA=true
+    }
+    if(event.code=='keyD'){
+        keyboardD=true
+    }
+    if(event.code=='keyW'){
+        keyboardW=true
+    }
+    if(event.code=='keyS'){
+        keyboardS=true
+    }
+    if(event.code=='keyN'){
+        keyboardN=true
+    }
+    if(event.code=='keyM'){
+        keyboardM=true
+    }
+    if(event.code=='Space'){
+        keyboardSpace=true
+    }
+    console.log(event.code)
+}
+function keyUp(event){
+    if(event.code=='keyA'){
+        keyboardA=false
+        keyboardAHold=false
+    }
+    if(event.code=='keyD'){
+        keyboardD=false
+        keyboardDhold=false
+    }
+    if(event.code=='keyW'){
+        keyboardW=false
+    }
+    if(event.code=='keyS'){
+        keyboardS=false
+    }
+    if(event.code=='keyN'){
+        keyboardN=false
+    }
+    if(event.code=='keyM'){
+        keyboardM=false
+    }
+    if(event.code=='Space'){
+        keyboardSpace=false
+    }
+}
+function inputProcess(){
+    let temp=[x=0,y=0,hold=false]
+    if(dasTimer>0){
+        dasTimer--
+    }
+    if(keyboardA||keyboardAHold&&dasTimer==0){
+        out.x=1
+        console.log(out.x)
+    }
+    return 0 // placeholder
 }
 function brayden(){
     console.log(true)
