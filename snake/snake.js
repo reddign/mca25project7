@@ -235,35 +235,31 @@ function drawSnake() {
         }
         // TAIL
         else if (i === snake.length - 1) {
-            if (part.direction == 'left') graphics.drawImage(tailL, part.x, part.y, blockwidth, blockheight); // tail came from left, so point right
-            if (part.direction == 'right') graphics.drawImage(tailr, part.x, part.y, blockwidth, blockheight); // tail came from right, so point left  
-            if (part.direction == 'up') graphics.drawImage(tailu, part.x, part.y, blockwidth, blockheight); // tail came from up, so point down
-            if (part.direction == 'down') graphics.drawImage(taild, part.x, part.y, blockwidth, blockheight); // tail came from down, so point up
+            if (part.direction == 'left') graphics.drawImage(tailL, part.x, part.y, blockwidth, blockheight);
+            if (part.direction == 'right') graphics.drawImage(tailr, part.x, part.y, blockwidth, blockheight); 
+            if (part.direction == 'up') graphics.drawImage(tailu, part.x, part.y, blockwidth, blockheight);
+            if (part.direction == 'down') graphics.drawImage(taild, part.x, part.y, blockwidth, blockheight); 
         }
         // BODY
         else {
             if (prev && part.direction !== prev.direction) {
                 graphics.save();
                 
-                // prev.direction = where we're going TO
-                // part.direction = where we came FROM
-                
-                // Going right from up OR going down from left
                 if ((part.direction == 'up' && prev.direction == 'right') ||
                     (part.direction == 'left' && prev.direction == 'down')) {
                     graphics.drawImage(turnRD, part.x, part.y, blockwidth, blockheight);
                 }
-                // Going right from down OR going up from left
+
                 else if ((part.direction == 'down' && prev.direction == 'right') ||
                         (part.direction == 'left' && prev.direction == 'up')) {
                     graphics.drawImage(turnUR, part.x, part.y, blockwidth, blockheight);
                 }
-                // Going left from up OR going down from right
+
                 else if ((part.direction == 'up' && prev.direction == 'left') ||
                         (part.direction == 'right' && prev.direction == 'down')) {
                     graphics.drawImage(turnLD, part.x, part.y, blockwidth, blockheight);
                 }
-                // Going left from down OR going up from right
+
                 else if ((part.direction == 'down' && prev.direction == 'left') ||
                         (part.direction == 'right' && prev.direction == 'up')) {
                     graphics.drawImage(turnLU, part.x, part.y, blockwidth, blockheight);
