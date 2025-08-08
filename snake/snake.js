@@ -173,9 +173,10 @@ function restartGame(event) {
     const y = event.clientY - rect.top;
     if ((x >= 150 && x <= 350 && y >= 320 && y <= 380) && (level == 'wait')) {
         level = 'ready';
+        loop = window.setInterval(animate, 350);
+        reset();
+
     }
-    loop = window.setInterval(animate, 350);
-    reset();
 }
 
 function updateSnakePosition() {
