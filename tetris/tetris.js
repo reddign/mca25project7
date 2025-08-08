@@ -36,6 +36,7 @@ let keyboardDHold=false
 let xMoveFacing=0
 let heldPiece=7
 let canHold=true
+let moved=false
 document.addEventListener('keydown',keyDown)
 document.addEventListener('keyup',keyUp)
 setup()
@@ -55,15 +56,19 @@ function update(){
     }else{
         if(timer%grav==0||timer%Math.floor(grav/4)==0&&keyboardS){
             pieceY+=1
+            moved=true
         }
     }
     if(moveHoriz(input.x)){
         pieceX+=input.x
+        moved=true
     }
     if(input.rotate!=0){
         rotatema(input.rotate)
+        moved=true
     }
     if(input.hold&&canHold){
+        moved=true
         hold()
     }
 }
@@ -122,6 +127,7 @@ function fillQueue(){
 }
 function newPiece(){
     queueInd++
+    moved=false
     placeTimer=placeTimerReset
     pieceCurrent=pieceQueue[queueInd]
     pieceShape=pieceShapeArray[pieceCurrent]
@@ -153,6 +159,9 @@ function onGround(){
     return false
 }
 function placePiece(){
+    if(!moved){
+        gameEnd()
+    }
     canHold=true
     for(let i=board.length;i<=19-(pieceY+getHighest());i++){
         board.push([7,7,7,7,7,7,7,7,7,7])
@@ -339,6 +348,13 @@ function hold(){
         }
         pieceShape=pieceShapeArray[pieceCurrent]
     }
+}
+function gameEnd(){
+    graphics.fillStyle="black"
+    graphics.fillRect(0,0,canvas.width,canvas.height)
+    graphics.fillStyle="gainsboro"
+    graphics.fillText("GAME OVER",canvas.width/2,canvas.height/2)
+    window.clearInterval(process)
 }
 function brayden(){
     console.log(true)
