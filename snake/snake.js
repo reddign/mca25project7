@@ -235,10 +235,10 @@ function drawSnake() {
         }
         // TAIL
         else if (i === snake.length - 1) {
-            if (part.direction == 'left') graphics.drawImage(tailL, part.x, part.y, blockwidth, blockheight);
-            if (part.direction == 'right') graphics.drawImage(tailr, part.x, part.y, blockwidth, blockheight); 
-            if (part.direction == 'up') graphics.drawImage(tailu, part.x, part.y, blockwidth, blockheight);
-            if (part.direction == 'down') graphics.drawImage(taild, part.x, part.y, blockwidth, blockheight); 
+            if (prev.direction == 'left') graphics.drawImage(tailL, part.x, part.y, blockwidth, blockheight); // tail came from left, so point right
+            if (prev.direction == 'right') graphics.drawImage(tailr, part.x, part.y, blockwidth, blockheight); // tail came from right, so point left  
+            if (prev.direction == 'up') graphics.drawImage(tailu, part.x, part.y, blockwidth, blockheight); // tail came from up, so point down
+            if (prev.direction == 'down') graphics.drawImage(taild, part.x, part.y, blockwidth, blockheight); // tail came from down, so point up
         }
         // BODY
         else {
