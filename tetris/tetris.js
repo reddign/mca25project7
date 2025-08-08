@@ -70,17 +70,9 @@ function update(){
 function draw(){
     graphics.fillStyle="black"
     graphics.fillRect(0,0,canvas.width,canvas.height)
-    graphics.strokeStyle="dimGray"
-    for(let r=0;r<20;r++){
-        for(let c=0;c<10;c++){
-            graphics.strokeRect(490+30*c,60+30*r,30,30)
-        }
-    }
-    graphics.strokeStyle="gainsboro"
-    graphics.strokeRect(490,60,300,600)
     for(let r=0;r<board.length;r++){
         for(let c=0;c<10;c++){
-            if(board[r][c]!=7){ // color handling works hopefully but untested
+            if(board[r][c]!=7){
                 graphics.fillStyle=colorArray[board[r][c]]
                 graphics.fillRect(490+30*c,60+30*(19-r),30,30) // it works yippee (o yeah y axis is inverted in the table btw so thats fun (its like this intentionally dont worry about it))
             }
@@ -96,12 +88,26 @@ function draw(){
             graphics.fillRect(810+10*(pieceShapeArray[pieceQueue[queueInd+i+1]][j][0]),80+10*(i*5+pieceShapeArray[pieceQueue[queueInd+i+1]][j][1]),10,10)
         }
     }
+    if(heldPiece!=7){
+        graphics.fillStyle=colorArray[heldPiece]
+        for(let i=0;i<4;i++){
+            graphics.fillRect(420+20*(pieceShapeArray[heldPiece][i][0]),110+20*(pieceShapeArray[heldPiece][i][1]),20,20)
+        }
+    }
+    graphics.strokeStyle="dimGray"
+    for(let r=0;r<20;r++){
+        for(let c=0;c<10;c++){
+            graphics.strokeRect(490+30*c,60+30*r,30,30)
+        }
+    }
+    graphics.strokeStyle="gainsboro"
+    graphics.strokeRect(490,60,300,600)
 }
 function setup(){ // TODO: clean up & consolidate related code
     fillQueue()
     newPiece()
 }
-function fillQueue(){ // should work
+function fillQueue(){
     let bag=[0,1,2,3,4,5,6]
     //       z,l,o,s,i,j,t
     for(let i=0;i<7;i++){
@@ -114,7 +120,7 @@ function fillQueue(){ // should work
         pieceQueue.push(bag[i])
     }
 }
-function newPiece(){ // should work
+function newPiece(){
     queueInd++
     placeTimer=placeTimerReset
     pieceCurrent=pieceQueue[queueInd]
@@ -166,7 +172,7 @@ function placePiece(){
             board.splice(r,1)
         }
     }
-    newPiece() // finish this fr (maybe finished? idk n idrc rn) (i think its finished now ok)
+    newPiece()
 }
 function getLowest(){
     let temp=-1
