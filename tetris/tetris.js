@@ -37,6 +37,7 @@ let xMoveFacing=0
 let heldPiece=7
 let canHold=true
 let moved=false
+let end=false
 document.addEventListener('keydown',keyDown)
 document.addEventListener('keyup',keyUp)
 setup()
@@ -107,6 +108,9 @@ function draw(){
     }
     graphics.strokeStyle="gainsboro"
     graphics.strokeRect(490,60,300,600)
+    if(end){
+        gameEnd()
+    }
 }
 function setup(){ // TODO: clean up & consolidate related code
     fillQueue()
@@ -160,7 +164,7 @@ function onGround(){
 }
 function placePiece(){
     if(!moved){
-        gameEnd()
+        end=true
     }
     canHold=true
     for(let i=board.length;i<=19-(pieceY+getHighest());i++){
@@ -353,7 +357,9 @@ function gameEnd(){
     graphics.fillStyle="black"
     graphics.fillRect(0,0,canvas.width,canvas.height)
     graphics.fillStyle="gainsboro"
-    graphics.fillText("GAME OVER",canvas.width/2,canvas.height/2)
+    graphics.font="36px monospace"
+    graphics.textAlign="center"
+    graphics.fillText("GAME OVER",canvas.width/2,canvas.height/2,)
     window.clearInterval(process)
 }
 function brayden(){
